@@ -3,6 +3,8 @@ import { getPatient, getVisits, getVisitImages, deletePatient } from '../lib/sup
 import { calculateAge, formatDate, formatDateTime, getInitials, genderIcon, formatPhone, formatPatientId } from '../utils/formatters'
 import VisitSummary from './VisitSummary'
 import ImageGallery from './ImageGallery'
+import GrowthCharts from './GrowthCharts'
+import VaccinationTracker from './VaccinationTracker'
 import { useToast } from '../App'
 
 export default function PatientProfile({ patientId, navigate, goBack }) {
@@ -62,6 +64,8 @@ export default function PatientProfile({ patientId, navigate, goBack }) {
   const tabs = [
     { id: 'visits', label: '📋 Visits', count: visits.length },
     { id: 'images', label: '📷 Images', count: images.length },
+    { id: 'growth', label: '📈 Growth', count: null },
+    { id: 'vaccines', label: '💉 Vaccines', count: null },
     { id: 'info', label: 'ℹ️ Info', count: null },
   ]
 
@@ -363,6 +367,14 @@ export default function PatientProfile({ patientId, navigate, goBack }) {
 
       {activeTab === 'images' && (
         <ImageGallery images={images} />
+      )}
+
+      {activeTab === 'growth' && (
+        <GrowthCharts patient={patient} />
+      )}
+
+      {activeTab === 'vaccines' && (
+        <VaccinationTracker patient={patient} />
       )}
 
       {activeTab === 'info' && (

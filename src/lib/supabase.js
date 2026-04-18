@@ -228,3 +228,51 @@ export async function getDashboardStats() {
     upcomingCount: upcomingRes.count || 0,
   }
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SUPABASE.JS ADDITIONS — Phase 2
+// ─────────────────────────────────────────────────────────────────────────────
+// Copy these functions into your existing src/lib/supabase.js file.
+// Do NOT replace the entire file — just append these exports.
+// ─────────────────────────────────────────────────────────────────────────────
+
+
+
+// ── Vaccinations ──────────────────────────────────────────────────────────────
+
+/**
+ * Fetch all vaccination records for a patient.
+ */
+export async function getVaccinations(patientId) {
+  const { data, error } = await supabase
+    .from('vaccinations')
+    .select('*')
+    .eq('patient_id', patientId)
+    .order('scheduled_age_weeks', { ascending: true });
+  if (error) throw error;
+  return data;
+}
+
+/**
+ * Upsert (insert or update) a single vaccination record.
+ * Uses vaccine_name + dose_number + patient_id as the conflict key.
+ * Pass id: undefined for new records, or id: <uuid> to update.
+ */
+export async function upsertVaccination(record) {
+  // Strip undefined id so Supabase uses the conflict columns for upsert
+  const payload = { ...record };
+  if (!payload.id) delete payload.id;
+
+  const { data, error } = await supabase
+    .from('vaccinations')
+    .upsert(payload, {
+      onConflict: 'patient_id,vaccine_name,dose_number',
+      ignoreDuplicates: false,
+    })
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
+}
+
+

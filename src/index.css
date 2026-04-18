@@ -768,3 +768,478 @@ select.form-input {
     border-radius: var(--radius-xl);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   PEDITRACK PHASE 2 — CSS ADDITIONS
+   Append this entire block to the bottom of src/index.css
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Shared loading / empty states ────────────────────────────────── */
+.growth-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.growth-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--coral-light, #F5C4B3);
+  border-top-color: var(--coral, #E8593C);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.growth-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 24px;
+  text-align: center;
+}
+.growth-empty-icon { font-size: 2.5rem; }
+.growth-empty p    { margin: 0; font-weight: 500; color: var(--text-primary); }
+.growth-empty-sub  { font-size: 0.85rem; color: var(--text-secondary); }
+
+/* ── Growth Charts ─────────────────────────────────────────────────── */
+.growth-charts-container {
+  padding: 0 0 24px;
+}
+.growth-who-note {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin: 0 0 16px;
+  padding: 8px 12px;
+  background: var(--surface, #f7f7f5);
+  border-radius: 8px;
+  border-left: 3px solid var(--teal, #1D9E75);
+}
+.growth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.growth-tab {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border, #D3D1C7);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+.growth-tab:hover {
+  border-color: var(--coral, #E8593C);
+  color: var(--coral, #E8593C);
+}
+.growth-tab.active {
+  background: var(--coral, #E8593C);
+  border-color: var(--coral, #E8593C);
+  color: #fff;
+  font-weight: 500;
+}
+.growth-chart-wrapper {
+  height: 300px;
+  margin-bottom: 24px;
+}
+
+/* Growth data table */
+.growth-table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border, #D3D1C7);
+}
+.growth-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.growth-table th {
+  background: var(--surface, #f7f7f5);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border, #D3D1C7);
+}
+.growth-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border-light, #EBEBEB);
+  color: var(--text-primary);
+}
+.growth-table tr:last-child td { border-bottom: none; }
+.growth-table tr:hover td { background: var(--surface, #f7f7f5); }
+
+/* ── Vaccination Tracker ───────────────────────────────────────────── */
+.vt-container { padding: 0 0 32px; }
+
+/* Stats bar */
+.vt-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 20px;
+  background: var(--surface, #f7f7f5);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.vt-stat { display: flex; flex-direction: column; align-items: center; }
+.vt-stat-num { font-size: 1.5rem; font-weight: 700; line-height: 1; }
+.vt-stat-label { font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+.vt-stat-done .vt-stat-num    { color: var(--teal, #1D9E75); }
+.vt-stat-overdue .vt-stat-num { color: var(--coral, #E8593C); }
+.vt-stat-total .vt-stat-num   { color: var(--text-primary); }
+
+.vt-progress-bar-wrap {
+  flex: 1;
+  min-width: 80px;
+  height: 6px;
+  background: var(--border, #D3D1C7);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.vt-progress-bar {
+  height: 100%;
+  background: var(--teal, #1D9E75);
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+.vt-progress-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--teal, #1D9E75);
+  white-space: nowrap;
+}
+
+/* Filter tabs */
+.vt-filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.vt-filter-tab {
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border, #D3D1C7);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.vt-filter-tab.active {
+  background: var(--teal, #1D9E75);
+  border-color: var(--teal, #1D9E75);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Timeline */
+.vt-timeline { display: flex; flex-direction: column; gap: 16px; }
+
+.vt-milestone {
+  border: 1px solid var(--border, #D3D1C7);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.vt-milestone-done {
+  border-color: rgba(29, 158, 117, 0.35);
+  background: rgba(29, 158, 117, 0.02);
+}
+
+.vt-milestone-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--surface, #f7f7f5);
+  border-bottom: 1px solid var(--border, #D3D1C7);
+}
+.vt-milestone-done .vt-milestone-header {
+  background: rgba(29, 158, 117, 0.06);
+  border-bottom-color: rgba(29, 158, 117, 0.2);
+}
+.vt-milestone-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border, #D3D1C7);
+  flex-shrink: 0;
+}
+.vt-milestone-dot.done { background: var(--teal, #1D9E75); }
+.vt-milestone-label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  flex: 1;
+}
+.vt-milestone-count {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  background: var(--border, #D3D1C7);
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+.vt-milestone-done .vt-milestone-count {
+  background: rgba(29, 158, 117, 0.15);
+  color: var(--teal, #1D9E75);
+}
+
+/* Vaccine rows */
+.vt-vaccine-list { display: flex; flex-direction: column; }
+
+.vt-vaccine-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light, #EBEBEB);
+  flex-wrap: wrap;
+  transition: background 0.1s;
+}
+.vt-vaccine-row:last-child { border-bottom: none; }
+.vt-vaccine-row:hover { background: var(--surface, #f7f7f5); }
+
+/* Checkbox button */
+.vt-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 2px solid var(--border, #D3D1C7);
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  margin-top: 1px;
+  font-family: inherit;
+}
+.vt-checkbox.checked {
+  background: var(--teal, #1D9E75);
+  border-color: var(--teal, #1D9E75);
+}
+.vt-checkbox:hover:not(:disabled) {
+  border-color: var(--teal, #1D9E75);
+}
+.vt-checkbox:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.vt-spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+}
+
+/* Vaccine info */
+.vt-vaccine-info {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.vt-vaccine-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+.vt-vaccine-meta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Right section: badge + due date */
+.vt-vaccine-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  min-width: 90px;
+}
+.vt-status-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.vt-status-badge.vs-done     { background: rgba(29,158,117,0.12); color: #0F6E56; }
+.vt-status-badge.vs-overdue  { background: rgba(232,89,60,0.12);  color: #993C1D; }
+.vt-status-badge.vs-due-soon { background: rgba(239,159,39,0.15); color: #854F0B; }
+.vt-status-badge.vs-upcoming { background: rgba(136,135,128,0.1); color: #5F5E5A; }
+
+.vt-due-date {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+/* Expanded admin detail */
+.vt-admin-detail {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.vt-batch-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 6px 10px;
+  border: 1px solid var(--border, #D3D1C7);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: #fff;
+}
+.vt-batch-input:focus {
+  outline: none;
+  border-color: var(--teal, #1D9E75);
+}
+
+/* ── Visit Summary (AI) ────────────────────────────────────────────── */
+.vs-container { padding: 0 0 32px; }
+
+.vs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.vs-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.vs-visit-count {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+.vs-date-range {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.vs-generate-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.vs-btn-spinner {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+.vs-privacy-note {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  background: rgba(29,158,117,0.06);
+  border-radius: 8px;
+  border-left: 3px solid var(--teal, #1D9E75);
+  margin-bottom: 16px;
+}
+
+.vs-error {
+  padding: 10px 14px;
+  background: rgba(232,89,60,0.08);
+  border: 1px solid rgba(232,89,60,0.25);
+  border-radius: 8px;
+  color: #993C1D;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.vs-summary-box {
+  border: 1px solid var(--border, #D3D1C7);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #fff;
+}
+.vs-ai-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: rgba(239,159,39,0.15);
+  color: #854F0B;
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+.vs-template-badge {
+  background: rgba(136,135,128,0.1);
+  color: #5F5E5A;
+}
+
+/* AI content rendering */
+.ai-summary-content { font-size: 0.88rem; line-height: 1.65; }
+.ai-summary-h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 14px 0 6px;
+  text-transform: none;
+}
+.ai-summary-h4:first-child { margin-top: 0; }
+.ai-summary-li {
+  margin: 3px 0 3px 18px;
+  color: var(--text-primary);
+}
+.ai-summary-p {
+  margin: 6px 0;
+  color: var(--text-primary);
+}
+
+/* Raw visit log */
+.vs-details { margin-top: 8px; }
+.vs-details-summary {
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+  user-select: none;
+}
+.vs-details-summary:hover { color: var(--text-primary); }
+.vs-raw-list { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.vs-raw-item {
+  display: flex;
+  gap: 14px;
+  padding: 12px;
+  background: var(--surface, #f7f7f5);
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+.vs-raw-date {
+  font-weight: 600;
+  color: var(--coral, #E8593C);
+  white-space: nowrap;
+  min-width: 90px;
+}
+.vs-raw-body { flex: 1; }
+.vs-raw-body p { margin: 2px 0; color: var(--text-primary); }
