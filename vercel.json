@@ -1,1 +1,1 @@
-{"installCommand": "npm install", "framework": "vite"}
+{"installCommand": "npm install --legacy-peer-deps", "framework": "vite"}
